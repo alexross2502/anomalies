@@ -9,7 +9,7 @@ function App() {
 
   const [CSVData, setCSVData] = useState([]);
 
-  usePaparseLogger(CSVData);
+  //usePaparseLogger(CSVData);
   useChartjsLogger(CSVData, setGraphData);
 
   return (

@@ -9,7 +9,6 @@ const papaparseHandler = (e, setCSVData) => {
     skipEmptyLines: true,
     transformHeader: (header) => header.trim(),
     complete: (result) => {
-      console.log(result.data);
       setCSVData(result.data);
     },
     error: (error) => {
