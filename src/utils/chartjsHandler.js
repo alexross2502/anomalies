@@ -1,8 +1,9 @@
 const chartjsHandler = (CSVData, setGraphData) => {
+  console.log(CSVData);
   const labels = CSVData.map((el) => el.Time);
   const registrations = CSVData.map((el) => el.Registrations);
-  //const epr = CSVData.map((el) => parseFloat(el.EPR.replace(",", ".")));
-  const epr = CSVData.map((el) => el.EPR);
+  const epr = CSVData.map((el) => parseFloat(el.EPR));
+
   setGraphData({
     labels: labels,
     datasets: [
