@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 const usePaparseLogger = (CSVData) => {
   useMemo(() => {
-    console.log(CSVData);
+    //console.log(CSVData);
   }, [CSVData]);
 };
 

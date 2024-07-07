@@ -1,24 +1,30 @@
-const chartjsHandler = (CSVData, setGraphData) => {
-  const labels = CSVData.map((el) => el.Time);
-  const registrations = CSVData.map((el) => el.Registrations);
-  const epr = CSVData.map((el) => parseFloat(el.EPR));
+const chartjsHandler = (CSVDataWithAnomalies, setGraphData) => {
+  const labels = CSVDataWithAnomalies.map((el) => el.time);
+  const registrations = CSVDataWithAnomalies.map((el) => el.registrations);
+  const epr = CSVDataWithAnomalies.map((el) => parseFloat(el.epr));
+ // console.log(CSVDataWithAnomalies)
 
   setGraphData({
     labels: labels,
     datasets: [
-      {
-        label: "Registrations",
-        data: registrations,
-        borderColor: "green",
-        backgroundColor: "rgba(75,192,192,0.4)",
-        pointBackgroundColor: registrations.map(() => "green"),
-      },
+      
       {
         label: "EPR",
         data: epr,
         borderColor: "yellow",
-        backgroundColor: "rgba(255, 206, 86, 0.4)",
-        pointBackgroundColor: epr.map(() => "yellow"),
+        backgroundColor:'gray',
+        pointBackgroundColor: epr.map((el, index) => {
+          return CSVDataWithAnomalies[index].anomaly ? 'red' : 'gray'
+        }),
+        
+        
+      },
+      {
+        label: "Registrations",
+        data: registrations,
+        borderColor: "green",
+        backgroundColor:'green',
+        pointBackgroundColor: 'green',
       },
     ],
   });

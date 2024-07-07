@@ -1,5 +1,7 @@
 const anomalyCheckerUtil = (deviation, permissibleDeviation, ratioRegistrationsToEPR) => {
-    console.log(deviation, ratioRegistrationsToEPR - permissibleDeviation <= deviation && deviation <= ratioRegistrationsToEPR + permissibleDeviation)
+   if(!(ratioRegistrationsToEPR - permissibleDeviation <= deviation && deviation <= ratioRegistrationsToEPR + permissibleDeviation)){
+    console.log(deviation, ratioRegistrationsToEPR - permissibleDeviation, ratioRegistrationsToEPR + permissibleDeviation)
+   }
     return ratioRegistrationsToEPR - permissibleDeviation <= deviation && deviation <= ratioRegistrationsToEPR + permissibleDeviation
 }
 
