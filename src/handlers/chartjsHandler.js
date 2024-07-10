@@ -1,3 +1,4 @@
+
 const chartjsHandler = (CSVDataWithAnomalies, setGraphData) => {
   const labels = CSVDataWithAnomalies.map((el) => el.time);
   const registrations = CSVDataWithAnomalies.map((el) => el.registrations);

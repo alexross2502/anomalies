@@ -9,25 +9,28 @@ import objectPropertyRelations from "../utils/objectPropertyRelations";
 const anomalyHandler = (CSVData) => {
 
 // Ratio of all registration-EPR pairs
-const relationsRegistrationsToEPR = objectPropertyRelations(CSVData, "registrations", "epr")
+const {percentageСhange: relationsRegistrationsToEPRPercent, numericalСhange: relationsRegistrationsToEPR}  = objectPropertyRelations(CSVData, "registrations", "epr")
+console.log(relationsRegistrationsToEPRPercent, 'relationsRegistrationsToEPRPercent')
 console.log(relationsRegistrationsToEPR, 'relationsRegistrationsToEPR')
 // Finding the median of deviations to protect the average deviation from sudden surges
 const medianDeviation = medianDeviationUtil([...relationsRegistrationsToEPR])
-// Adding a median to clear average deviations from the influence of sudden outliers
+console.log(medianDeviation,'medianDeviation')
+//Cleaning the source array from stuffing
  const CSVDataWithoutInjections = injectionCleanerUtil(CSVData, medianDeviation, relationsRegistrationsToEPR)
- //console.log(CSVData)
- //console.log(CSVDataWithoutInjections)
+console.log(CSVDataWithoutInjections, 'CSVDataWithoutInjections')
+//Finding the ratio of registrations to EPR without stuffing
+const relationsRegistrationsToEPRWithoutInjections = objectPropertyRelations(CSVDataWithoutInjections, "registrations", "epr")
   // Total number of registrations
   const totalRegistrations = objectPropertyReducer(CSVDataWithoutInjections, "registrations");
-  //console.log(totalRegistrations)
   // Total number of EPR
   const totalEPR = objectPropertyReducer(CSVDataWithoutInjections, "epr");
-  //console.log(totalEPR)
   // General ratio of registrations to EPR
   const ratioRegistrationsToEPR = totalRegistrations / totalEPR
   console.log(ratioRegistrationsToEPR, 'ratioRegistrationsToEPR')
+  
   // Average delta
-  const averageDeviation = averageDeviationUtil(ratioRegistrationsToEPR, objectPropertyRelations(CSVDataWithoutInjections, "registrations", "epr"))
+  console.log(relationsRegistrationsToEPRWithoutInjections)
+  const averageDeviation = averageDeviationUtil(ratioRegistrationsToEPR, relationsRegistrationsToEPRWithoutInjections.percentageСhange)
   console.log(averageDeviation, 'averageDeviation')
   // Permissible deviation from the average
   const permissibleDeviation = averageDeviation * multipliers.average
@@ -38,6 +41,7 @@ const medianDeviation = medianDeviationUtil([...relationsRegistrationsToEPR])
         CSVData[index].anomaly = true
      }
   })
+ 
 
 return CSVData
   
