@@ -1,5 +1,5 @@
 const Multipliers = {
-    average : 3,
+    average : 2.5,
     median : 5
 }
 

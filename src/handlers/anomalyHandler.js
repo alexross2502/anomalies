@@ -5,13 +5,16 @@ import injectionCleanerUtil from "../utils/injectionCleanerUtil";
 import medianDeviationUtil from "../utils/medianDeviationUtil";
 import objectPropertyReducer from "../utils/objectPropertyReducer";
 import objectPropertyRelations from "../utils/objectPropertyRelations";
+import stepDifferenceUtil from "../utils/stepDifferenceUtil";
 
 const anomalyHandler = (CSVData) => {
 
 // Ratio of all registration-EPR pairs
-const {percentageСhange: relationsRegistrationsToEPRPercent, numericalСhange: relationsRegistrationsToEPR}  = objectPropertyRelations(CSVData, "registrations", "epr")
-console.log(relationsRegistrationsToEPRPercent, 'relationsRegistrationsToEPRPercent')
+const relationsRegistrationsToEPR  = objectPropertyRelations(CSVData, "registrations", "epr")
 console.log(relationsRegistrationsToEPR, 'relationsRegistrationsToEPR')
+//
+const stepDifference = stepDifferenceUtil(CSVData)
+console.log(stepDifference, 'stepDifference')
 // Finding the median of deviations to protect the average deviation from sudden surges
 const medianDeviation = medianDeviationUtil([...relationsRegistrationsToEPR])
 console.log(medianDeviation,'medianDeviation')
@@ -30,14 +33,16 @@ const relationsRegistrationsToEPRWithoutInjections = objectPropertyRelations(CSV
   
   // Average delta
   console.log(relationsRegistrationsToEPRWithoutInjections)
-  const averageDeviation = averageDeviationUtil(ratioRegistrationsToEPR, relationsRegistrationsToEPRWithoutInjections.percentageСhange)
+  const averageDeviation = averageDeviationUtil(ratioRegistrationsToEPR, relationsRegistrationsToEPRWithoutInjections)
   console.log(averageDeviation, 'averageDeviation')
   // Permissible deviation from the average
   const permissibleDeviation = averageDeviation * multipliers.average
   console.log(permissibleDeviation, 'permissibleDeviation')
   // Checking all points for anomalies and marking suitable ones
   relationsRegistrationsToEPR.forEach((el, index)=>{
+    console.log(el)
      if(!anomalyCheckerUtil(el, permissibleDeviation, ratioRegistrationsToEPR)) {
+      
         CSVData[index].anomaly = true
      }
   })
