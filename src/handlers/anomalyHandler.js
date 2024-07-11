@@ -39,14 +39,13 @@ const relationsRegistrationsToEPRWithoutInjections = objectPropertyRelations(CSV
   const permissibleDeviation = averageDeviation * multipliers.average
   console.log(permissibleDeviation, 'permissibleDeviation')
   // Checking all points for anomalies and marking suitable ones
-  relationsRegistrationsToEPR.forEach((el, index)=>{
-    console.log(el)
-     if(!anomalyCheckerUtil(el, permissibleDeviation, ratioRegistrationsToEPR)) {
+  // relationsRegistrationsToEPR.forEach((el, index)=>{
+  //    if(!anomalyCheckerUtil(el, permissibleDeviation, ratioRegistrationsToEPR)) {
       
-        CSVData[index].anomaly = true
-     }
-  })
- 
+  //       CSVData[index].anomaly = true
+  //    }
+  // })
+  anomalyCheckerUtil(relationsRegistrationsToEPR, permissibleDeviation, ratioRegistrationsToEPR, CSVData, stepDifference)
 
 return CSVData
   

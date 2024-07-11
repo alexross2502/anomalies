@@ -7,7 +7,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.chart-container {
+  flex: 1; 
+  padding: 20px; 
+  background-color: #f8f9fa; 
+}
+
+.dropzone {
+  border: 2px dashed #007bff;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  color: #007bff;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.dropzone:hover {
+  background-color: #e9ecef;
 }

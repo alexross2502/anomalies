@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { LineGraph } from "./components/chartjs/Line";
+import { LineGraph } from "./components/Line";
 import papaparseHandler from "./handlers/papaparseHandler";
 import usePaparseLogger from "./hooks/usePaparseLogger";
 import useChartjsRenderer from "./hooks/useChartjsRenderer";
+import FileInput from "./components/FileInput";
+import './index.css'
 
 function App() {
   const [graphData, setGraphData] = useState({});
@@ -13,12 +15,12 @@ function App() {
 
   return (
     <div className="App">
-      <input
-        type="file"
-        accept=".csv"
-        onChange={(e) => papaparseHandler(e, setCSVData)}
-      ></input>
-      {Object.keys(graphData).length > 0 && <LineGraph graphData={graphData} />}
+      <FileInput setCSVData={setCSVData} />
+      {Object.keys(graphData).length > 0 && (
+        <div className="chart-container">
+          <LineGraph graphData={graphData} />
+        </div>
+      )}
     </div>
   );
 }
