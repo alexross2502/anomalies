@@ -3,14 +3,14 @@ import { useDropzone } from 'react-dropzone';
 import '../index.css';
 import papaparseHandler from '../handlers/papaparseHandler';
 
-const FileInput = ({ setCSVData }) => {
+const FileInput = ({ setCSVData, setGraphData }) => {
+    
   const { getRootProps, getInputProps } = useDropzone({
     accept: '.csv', 
     onDrop: (acceptedFiles) => {
       papaparseHandler({ target: { files: acceptedFiles } }, setCSVData);
     },
   });
-
   return (
     <div>
       <div {...getRootProps({ className: 'dropzone' })}>
