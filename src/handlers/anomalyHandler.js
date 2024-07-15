@@ -8,13 +8,11 @@ import objectPropertyRelations from "../utils/objectPropertyRelations";
 import stepDifferenceUtil from "../utils/stepDifferenceUtil";
 
 const anomalyHandler = (CSVData) => {
-
-// Ratio of all registration-EPR pairs
+try {
+  // Ratio of all registration-EPR pairs
 const relationsRegistrationsToEPR  = objectPropertyRelations(CSVData, "registrations", "epr")
 console.log(relationsRegistrationsToEPR, 'relationsRegistrationsToEPR')
-//
-const stepDifference = stepDifferenceUtil(CSVData)
-console.log(stepDifference, 'stepDifference')
+
 // Finding the median of deviations to protect the average deviation from sudden surges
 const medianDeviation = medianDeviationUtil([...relationsRegistrationsToEPR])
 console.log(medianDeviation,'medianDeviation')
@@ -45,9 +43,17 @@ const relationsRegistrationsToEPRWithoutInjections = objectPropertyRelations(CSV
   //       CSVData[index].anomaly = true
   //    }
   // })
-  anomalyCheckerUtil(relationsRegistrationsToEPR, permissibleDeviation, ratioRegistrationsToEPR, CSVData, stepDifference)
+  anomalyCheckerUtil(relationsRegistrationsToEPR, permissibleDeviation, ratioRegistrationsToEPR, CSVData)
+
+  //
+const stepDifference = stepDifferenceUtil(CSVData)
+console.log(CSVData, 'stepDifference')
 
 return CSVData
+} catch (error) {
+  console.log(error)
+}
+
   
 };
 

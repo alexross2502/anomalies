@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className="App">
-      <FileInput setCSVData={setCSVData} />
+      <FileInput setCSVData={setCSVData}/>
       {Object.keys(graphData).length > 0 && (
         <div className="chart-container">
           <LineGraph graphData={graphData} />

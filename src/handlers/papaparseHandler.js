@@ -3,7 +3,6 @@ import Papa from "papaparse";
 const papaparseHandler = (e, setCSVData) => {
   const file = e.target.files[0];
   Papa.parse(file, {
-    // delimiter: ",",
     header: true,
     dynamicTyping: true,
     skipEmptyLines: true,
