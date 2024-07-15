@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +19,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  zoomPlugin
 );
 
 const options = {
@@ -30,9 +32,28 @@ const options = {
     tooltip: {
       enabled: true,
     },
+    zoom: {
+      zoom: {
+        wheel: {
+          enabled: true,  
+          modifierKey: 'ctrl',  
+          speed: 0.1,  
+        },
+        pinch: {
+          enabled: true, 
+        },
+        mode: 'x',  
+      },
+      pan: {
+        enabled: true,  
+        mode: 'x',  
+        speed: 10,  
+        threshold: 10,  
+      },
+    },
   },
 };
 
 export const LineGraph = ({ graphData }) => {
-  return  <Line options={options} data={graphData} />
+  return <Line options={options} data={graphData} />;
 };
