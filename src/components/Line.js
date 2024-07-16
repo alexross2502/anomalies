@@ -35,20 +35,20 @@ const options = {
     zoom: {
       zoom: {
         wheel: {
-          enabled: true,  
-          modifierKey: 'ctrl',  
-          speed: 0.1,  
+          enabled: true,
+          modifierKey: "ctrl",
+          speed: 0.1,
         },
         pinch: {
-          enabled: true, 
+          enabled: true,
         },
-        mode: 'x',  
+        mode: "x",
       },
       pan: {
-        enabled: true,  
-        mode: 'x',  
-        speed: 10,  
-        threshold: 10,  
+        enabled: true,
+        mode: "x",
+        speed: 10,
+        threshold: 10,
       },
     },
   },

@@ -6,8 +6,10 @@ const medianStepDeviationUtil = (CSVData) => {
 
   for (let i = 0; i < CSVData.length - 1; i++) {
     const eprDifference = CSVData[i + 1].epr - CSVData[i].epr;
-    const registrationsDifference = Math.abs(CSVData[i + 1].registrations - CSVData[i].registrations);
-    const stepDeviation = eprDifference / registrationsDifference;
+    const registrationsDifference = Math.abs(
+      CSVData[i + 1].registrations - CSVData[i].registrations
+    );
+    const stepDeviation = eprDifference / registrationsDifference || 1;
 
     if (CSVData[i + 1].registrations - CSVData[i].registrations >= 0) {
       arrayWithIncreasing.push(stepDeviation);
@@ -18,7 +20,7 @@ const medianStepDeviationUtil = (CSVData) => {
 
   return {
     medianWithIncreasing: medianDeviationUtil(arrayWithIncreasing) || 0.1,
-    medianWithDecreasing: medianDeviationUtil(arrayWithDecreasing) || 0.1
+    medianWithDecreasing: medianDeviationUtil(arrayWithDecreasing) || 0.1,
   };
 };
 

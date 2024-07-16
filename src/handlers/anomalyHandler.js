@@ -8,46 +8,68 @@ import objectPropertyReducer from "../utils/objectPropertyReducer";
 import objectPropertyRelations from "../utils/objectPropertyRelations";
 
 const anomalyHandler = (CSVData) => {
-try {
-  // Ratio of all registration-EPR pairs
-const relationsRegistrationsToEPR  = objectPropertyRelations(CSVData, "registrations", "epr")
+  try {
+    // Ratio of all registration-EPR pairs
+    const relationsRegistrationsToEPR = objectPropertyRelations(
+      CSVData,
+      "registrations",
+      "epr"
+    );
 
+    // Finding the median of deviations to protect the average deviation from sudden surges
+    const medianDeviation = medianDeviationUtil([
+      ...relationsRegistrationsToEPR,
+    ]);
 
-// Finding the median of deviations to protect the average deviation from sudden surges
-const medianDeviation = medianDeviationUtil([...relationsRegistrationsToEPR])
+    //Cleaning the source array from stuffing
+    const CSVDataWithoutInjections = injectionCleanerUtil(
+      CSVData,
+      medianDeviation,
+      relationsRegistrationsToEPR
+    );
 
-//Cleaning the source array from stuffing
- const CSVDataWithoutInjections = injectionCleanerUtil(CSVData, medianDeviation, relationsRegistrationsToEPR)
+    //Finding the ratio of registrations to EPR without stuffing
+    const relationsRegistrationsToEPRWithoutInjections =
+      objectPropertyRelations(CSVDataWithoutInjections, "registrations", "epr");
+    // Total number of registrations
+    const totalRegistrations = objectPropertyReducer(
+      CSVDataWithoutInjections,
+      "registrations"
+    );
 
-//Finding the ratio of registrations to EPR without stuffing
-const relationsRegistrationsToEPRWithoutInjections = objectPropertyRelations(CSVDataWithoutInjections, "registrations", "epr")
-  // Total number of registrations
-  const totalRegistrations = objectPropertyReducer(CSVDataWithoutInjections, "registrations");
-  // Total number of EPR
-  const totalEPR = objectPropertyReducer(CSVDataWithoutInjections, "epr");
-  // General ratio of registrations to EPR
-  const ratioRegistrationsToEPR = totalRegistrations / totalEPR
+    // Total number of EPR
+    const totalEPR = objectPropertyReducer(CSVDataWithoutInjections, "epr");
 
-  // Average delta
-  const averageDeviation = averageDeviationUtil(ratioRegistrationsToEPR, relationsRegistrationsToEPRWithoutInjections)
+    // General ratio of registrations to EPR
+    const ratioRegistrationsToEPR = totalRegistrations / totalEPR;
 
-  // Permissible deviation from the average
-  const permissibleDeviation = averageDeviation * multipliers.average
+    // Average delta
+    const averageDeviation = averageDeviationUtil(
+      ratioRegistrationsToEPR,
+      relationsRegistrationsToEPRWithoutInjections
+    );
 
-  // Median change in EPR with growth and fall of registrations
-  const medianStepDeviation = medianStepDeviationUtil([...CSVDataWithoutInjections])
+    // Permissible deviation from the average
+    const permissibleDeviation = averageDeviation * multipliers.average;
 
-  // Checking all points for anomalies and marking suitable ones
-  anomalyCheckerUtil(relationsRegistrationsToEPR, permissibleDeviation, ratioRegistrationsToEPR, CSVData, medianStepDeviation)
+    // Median change in EPR with growth and fall of registrations
+    const medianStepDeviation = medianStepDeviationUtil([
+      ...CSVDataWithoutInjections,
+    ]);
 
+    // Checking all points for anomalies and marking suitable ones
+    anomalyCheckerUtil(
+      relationsRegistrationsToEPR,
+      permissibleDeviation,
+      ratioRegistrationsToEPR,
+      CSVData,
+      medianStepDeviation
+    );
 
-
-return CSVData
-} catch (error) {
-  console.log(error)
-}
-
-  
+    return CSVData;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default anomalyHandler;

@@ -4,49 +4,53 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
   try {
     let previousNormalElement = null;
 
-
     for (let i = index - 1; i >= 0; i--) {
       if (CSVData[i].anomaly === false) {
         previousNormalElement = CSVData[i];
         break;
       }
     }
-
+    console.log(medianStepDeviation);
     if (previousNormalElement === null) {
-      return false;  
+      return false;
     }
 
- 
     const eprDifference = CSVData[index].epr - previousNormalElement.epr;
-    const registrationsDifference = CSVData[index].registrations - previousNormalElement.registrations;
- console.log(eprDifference, 'eprDifference')
-console.log(registrationsDifference, 'registrationsDifference')
- //console.log(medianStepDeviation.medianWithIncreasing, 'medianStepDeviation.medianWithIncreasing')
- console.log(eprDifference / registrationsDifference, 'eprDifference / registrationsDifference')
- console.log(medianStepDeviation.medianWithIncreasing - medianStepDeviation.medianWithDecreasing * Multipliers.step, 'min')
-console.log(medianStepDeviation.medianWithIncreasing + medianStepDeviation.medianWithDecreasing * Multipliers.step, 'max')
+    const registrationsDifference =
+      CSVData[index].registrations - previousNormalElement.registrations;
 
-   
     if (registrationsDifference > 0) {
       return !(
-        medianStepDeviation.medianWithIncreasing - medianStepDeviation.medianWithIncreasing * Multipliers.step < eprDifference / registrationsDifference &&
-        eprDifference / registrationsDifference < medianStepDeviation.medianWithIncreasing + medianStepDeviation.medianWithIncreasing * Multipliers.step
+        medianStepDeviation.medianWithIncreasing -
+          medianStepDeviation.medianWithIncreasing * Multipliers.step <
+          eprDifference / registrationsDifference &&
+        eprDifference / registrationsDifference <
+          medianStepDeviation.medianWithIncreasing +
+            medianStepDeviation.medianWithIncreasing * Multipliers.step
       );
     }
-     if (registrationsDifference < 0) {
+    if (registrationsDifference < 0) {
       return !(
-        medianStepDeviation.medianWithDecreasing - medianStepDeviation.medianWithDecreasing * Multipliers.step < eprDifference / Math.abs(registrationsDifference) &&
-        eprDifference / Math.abs(registrationsDifference) < medianStepDeviation.medianWithDecreasing + medianStepDeviation.medianWithDecreasing * Multipliers.step
+        medianStepDeviation.medianWithDecreasing -
+          medianStepDeviation.medianWithDecreasing * Multipliers.step <
+          eprDifference / Math.abs(registrationsDifference) &&
+        eprDifference / Math.abs(registrationsDifference) <
+          medianStepDeviation.medianWithDecreasing +
+            medianStepDeviation.medianWithDecreasing * Multipliers.step
       );
-    } 
-    if(registrationsDifference === 0) {  
+    }
+    if (registrationsDifference === 0) {
       return !(
-        medianStepDeviation.medianWithIncreasing - medianStepDeviation.medianWithIncreasing * Multipliers.step < eprDifference &&
-        eprDifference < medianStepDeviation.medianWithIncreasing + medianStepDeviation.medianWithIncreasing * Multipliers.step
+        medianStepDeviation.medianWithIncreasing -
+          medianStepDeviation.medianWithIncreasing * Multipliers.step <
+          eprDifference &&
+        eprDifference <
+          medianStepDeviation.medianWithIncreasing +
+            medianStepDeviation.medianWithIncreasing * Multipliers.step
       );
     }
   } catch (error) {
-    return false;  
+    return false;
   }
 };
 

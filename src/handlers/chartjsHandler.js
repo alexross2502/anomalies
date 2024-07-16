@@ -1,4 +1,3 @@
-
 const chartjsHandler = (CSVDataWithAnomalies, setGraphData) => {
   const labels = CSVDataWithAnomalies.map((el) => el.time);
   const registrations = CSVDataWithAnomalies.map((el) => el.registrations);
@@ -11,17 +10,17 @@ const chartjsHandler = (CSVDataWithAnomalies, setGraphData) => {
         label: "EPR",
         data: epr,
         borderColor: "yellow",
-        backgroundColor:'gray',
+        backgroundColor: "gray",
         pointBackgroundColor: epr.map((el, index) => {
-          return CSVDataWithAnomalies[index].anomaly ? 'red' : 'gray'
-        }),      
+          return CSVDataWithAnomalies[index].anomaly ? "red" : "gray";
+        }),
       },
       {
         label: "Registrations",
         data: registrations,
         borderColor: "green",
-        backgroundColor:'green',
-        pointBackgroundColor: 'green',
+        backgroundColor: "green",
+        pointBackgroundColor: "green",
       },
     ],
   });
