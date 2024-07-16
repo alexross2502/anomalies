@@ -10,7 +10,7 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
         break;
       }
     }
-    console.log(medianStepDeviation);
+
     if (previousNormalElement === null) {
       return false;
     }
@@ -18,13 +18,14 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
     const eprDifference = CSVData[index].epr - previousNormalElement.epr;
     const registrationsDifference =
       CSVData[index].registrations - previousNormalElement.registrations;
+    console.log(medianStepDeviation)
 
     if (registrationsDifference > 0) {
       return !(
         medianStepDeviation.medianWithIncreasing -
-          medianStepDeviation.medianWithIncreasing * Multipliers.step <
+          medianStepDeviation.medianWithIncreasing * Multipliers.step <=
           eprDifference / registrationsDifference &&
-        eprDifference / registrationsDifference <
+        eprDifference / registrationsDifference <=
           medianStepDeviation.medianWithIncreasing +
             medianStepDeviation.medianWithIncreasing * Multipliers.step
       );
@@ -32,9 +33,9 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
     if (registrationsDifference < 0) {
       return !(
         medianStepDeviation.medianWithDecreasing -
-          medianStepDeviation.medianWithDecreasing * Multipliers.step <
+          medianStepDeviation.medianWithDecreasing * Multipliers.step <=
           eprDifference / Math.abs(registrationsDifference) &&
-        eprDifference / Math.abs(registrationsDifference) <
+        eprDifference / Math.abs(registrationsDifference) <=
           medianStepDeviation.medianWithDecreasing +
             medianStepDeviation.medianWithDecreasing * Multipliers.step
       );
@@ -42,9 +43,9 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
     if (registrationsDifference === 0) {
       return !(
         medianStepDeviation.medianWithIncreasing -
-          medianStepDeviation.medianWithIncreasing * Multipliers.step <
+          medianStepDeviation.medianWithIncreasing * Multipliers.step <=
           eprDifference &&
-        eprDifference <
+        eprDifference <=
           medianStepDeviation.medianWithIncreasing +
             medianStepDeviation.medianWithIncreasing * Multipliers.step
       );

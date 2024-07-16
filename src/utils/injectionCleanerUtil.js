@@ -7,9 +7,9 @@ const injectionCleanerUtil = (
 ) => {
   return CSVData.filter((el, index) => {
     return (
-      relationsRegistrationsToEPR[index] >
+      relationsRegistrationsToEPR[index] >=
         medianDeviation / multipliers.median &&
-      relationsRegistrationsToEPR[index] < medianDeviation * multipliers.median
+      relationsRegistrationsToEPR[index] <= medianDeviation * multipliers.median
     );
   });
 };
