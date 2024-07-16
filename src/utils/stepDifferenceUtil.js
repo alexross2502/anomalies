@@ -18,7 +18,6 @@ const stepDifferenceUtil = (medianStepDeviation, index, CSVData) => {
     const eprDifference = CSVData[index].epr - previousNormalElement.epr;
     const registrationsDifference =
       CSVData[index].registrations - previousNormalElement.registrations;
-    console.log(medianStepDeviation)
 
     if (registrationsDifference > 0) {
       return !(
